@@ -1,5 +1,5 @@
 
-# PROJECT 10: API REST - Gestión de Eventos y Asistentes
+# PROJECT 10: FULL STACK JAVASCRIPT
 ## _thePower - Desarrollo Full Stack_
 
 ## Descripción
