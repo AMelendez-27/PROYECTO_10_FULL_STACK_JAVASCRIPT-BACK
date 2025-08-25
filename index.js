@@ -3,7 +3,7 @@ const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
 const path = require('path');
-const db = require('./src/config/db');
+const { connectDB } = require('./src/config/db');
 const errorHandler = require('./src/api/utils/errorHandler');
 
 const app = express();
@@ -23,7 +23,7 @@ app.use(errorHandler);
 
 const PORT = process.env.PORT || 4000;
 
-db()
+connectDB()
   .then(() => {
     app.listen(PORT, () => {
       console.log(`Server running on port ${PORT}`);
