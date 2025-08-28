@@ -44,30 +44,61 @@ npm install
 npm run dev
 ```
 
+
 ## Endpoints
-#### _AUTH_
 
-| HTTP Method | Route                | Descripción                  | Body/Params (Ejemplo)                                  |
-|-------------|----------------------|------------------------------|--------------------------------------------------------|
-| `POST`      | `/api/auth/register` | Registro de usuario + login  | FormData: name, email, password, avatar (opcional)     |
-| `POST`      | `/api/auth/login`    | Login y obtención de token   | { email, password }                                    |
+### AUTH
 
-#### _USERS_
+| Método | Ruta | Descripción | Body/Params |
+|--------|------|-------------|-------------|
+| POST | `/api/auth/register` | Registro de usuario + login automático | FormData: name, email, password, avatar (opcional) |
+| POST | `/api/auth/login` | Login y obtención de token | { email, password } |
 
-| HTTP Method | Route         | Descripción                | Body/Params (Ejemplo)                                  |
-|-------------|--------------|----------------------------|--------------------------------------------------------|
-| `GET`       | `/api/users/me` | Obtener perfil propio      | Header: Authorization: Bearer <token>                  |
-| `PUT`       | `/api/users/me` | Actualizar perfil propio   | FormData: name, email, password, avatar (opcional)     |
+### USERS
 
-#### _EVENTS_
+| Método | Ruta | Descripción | Body/Params |
+|--------|------|-------------|-------------|
+| GET | `/api/users` | Listar usuarios (id y nombre) | - |
+| GET | `/api/users/me` | Obtener perfil propio | Header: Authorization: Bearer <token> |
+| PUT | `/api/users/me` | Subir/cambiar avatar de perfil | FormData: avatar (solo imagen) |
+| GET | `/api/users/email/:email` | Obtener nombre y avatar por email | :email (email del usuario) |
 
-| HTTP Method | Route                  | Descripción                        | Body/Params (Ejemplo)                                  |
-|-------------|------------------------|------------------------------------|--------------------------------------------------------|
-| `GET`       | `/api/events`          | Listar todos los eventos           | -                                                      |
-| `GET`       | `/api/events/:id`      | Obtener detalles de un evento      | :id (ID del evento)                                    |
-| `POST`      | `/api/events`          | Crear evento (autenticado)         | FormData: title, date, location, description, poster   |
-| `POST`      | `/api/events/:id/attend` | Confirmar asistencia (autenticado) | :id (ID del evento)                                    |
-| `GET`       | `/api/events/:id/attendees` | Listar asistentes de un evento | :id (ID del evento)                                    |
+**Notas sobre usuarios:**
+- El nombre y el email no se pueden modificar desde el perfil, solo la imagen de perfil.
+- El backend elimina la imagen anterior de Cloudinary al subir una nueva.
+
+### EVENTS
+
+| Método | Ruta | Descripción | Body/Params |
+|--------|------|-------------|-------------|
+| GET | `/api/events` | Listar todos los eventos | - |
+| GET | `/api/events/me/attending` | Eventos donde el usuario está apuntado (token) | Header: Authorization: Bearer <token> |
+| GET | `/api/events/me/created` | Eventos creados por el usuario (token) | Header: Authorization: Bearer <token> |
+| GET | `/api/events/:id` | Obtener detalles de un evento | :id (ID del evento) |
+| POST | `/api/events` | Crear evento (autenticado) | FormData o JSON: title, date, location, description, poster (opcional), attendeeEmails (opcional, emails separados por coma) |
+| POST | `/api/events/:id/confirm` | Confirmar asistencia (autenticado) | :id (ID del evento) |
+| POST | `/api/events/:id/reject` | Rechazar asistencia (autenticado) | :id (ID del evento) |
+| GET | `/api/events/:id/attendees` | Listar asistentes, confirmados y rechazados de evento | :id (ID del evento) |
+| DELETE | `/api/events/:id` | Eliminar evento (solo creador, autenticado) | :id (ID del evento) |
+
+**Notas sobre eventos:**
+- Al eliminar un evento, si tenía imagen en Cloudinary, también se elimina de la nube.
+- Los arrays `attendees`, `confirmed` y `rejected` permiten mostrar recuentos y listados diferenciados.
+
+---
+
+## Usuarios de prueba creados
+
+Puedes usar estos usuarios para probar el login y las funcionalidades del sistema:
+
+| Nombre | Email | Contraseña |
+|--------|-------------------|-------------|
+| alex   | alex@alex.com     | alex123     |
+| marta  | marta@marta.com   | marta123    |
+| test   | test@test.com     | test123     |
+| jefe   | jefe@jefe.com     | jefe123     |
+
+---
 
 ---
 ---

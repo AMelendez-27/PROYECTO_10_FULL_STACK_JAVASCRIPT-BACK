@@ -3,7 +3,16 @@ const jwt = require('jsonwebtoken');
 
 exports.register = async (req, res, next) => {
   try {
-    const { name, email, password } = req.body;
+    let name, email, password;
+    // Si viene como FormData (con avatar)
+    if (req.is('multipart/form-data')) {
+      name = req.body.name;
+      email = req.body.email;
+      password = req.body.password;
+    } else {
+      // Si viene como JSON
+      ({ name, email, password } = req.body);
+    }
     let user = await User.findOne({ email });
     if (user) return res.status(400).json({ error: 'Email already in use' });
     user = new User({ name, email, password });
@@ -19,7 +28,13 @@ exports.register = async (req, res, next) => {
 
 exports.login = async (req, res, next) => {
   try {
-    const { email, password } = req.body;
+    let email, password;
+    if (req.is('multipart/form-data')) {
+      email = req.body.email;
+      password = req.body.password;
+    } else {
+      ({ email, password } = req.body);
+    }
     const user = await User.findOne({ email });
     if (!user) return res.status(400).json({ error: 'Invalid credentials' });
     const isMatch = await user.comparePassword(password);
