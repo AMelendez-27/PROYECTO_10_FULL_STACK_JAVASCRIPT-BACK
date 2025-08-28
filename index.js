@@ -10,7 +10,10 @@ const app = express();
 
 // Middlewares
 app.use(cors({
-  origin: 'http://localhost:5173',
+  origin: [
+    'http://localhost:5173',
+    'https://proyecto-10-full-stack-javascript-front-406gzqll9.vercel.app'
+  ],
   credentials: true
 }));
 app.use(express.json());
