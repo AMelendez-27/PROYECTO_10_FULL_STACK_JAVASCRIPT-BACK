@@ -10,8 +10,10 @@ const app = express();
 
 // Middlewares
 const allowedOrigins = [
-  'https://proyecto-10-full-stack-javascript-front-pt819j1s4.vercel.app',
-  'http://localhost:5173'
+    'http://localhost:5173',
+    'https://proyecto-10-full-stack-javascript-front-406gzqll9.vercel.app',
+    'http://proyecto-10-full-stack-javascript-f-zeta.vercel.app',
+    'https://proyecto-10-full-stack-javascript-f-zeta.vercel.app'
 ];
 app.use(cors({
   origin: allowedOrigins,
