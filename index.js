@@ -9,11 +9,12 @@ const errorHandler = require('./src/api/utils/errorHandler');
 const app = express();
 
 // Middlewares
+const allowedOrigins = [
+  'https://proyecto-10-full-stack-javascript-front-pt819j1s4.vercel.app',
+  'http://localhost:5173'
+];
 app.use(cors({
-  origin: [
-    'http://localhost:5173',
-    'https://proyecto-10-full-stack-javascript-front-406gzqll9.vercel.app'
-  ],
+  origin: allowedOrigins,
   credentials: true
 }));
 app.use(express.json());
